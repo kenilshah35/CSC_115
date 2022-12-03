@@ -1,0 +1,190 @@
+<html>
+  <head>
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <title>lab9.html</title>
+    <link href="/library/skin/tool_base.css" type="text/css" rel="stylesheet" media="all" />
+    <link href="/library/skin/connex-default/tool.css" type="text/css" rel="stylesheet" media="all" />
+    <script type="text/javascript" language="JavaScript" src="/library/js/headscripts.js"></script>
+    <style>body { padding: 5px !important; }</style>
+  </head>
+  <body>
+<meta content="text/html;charset=UTF-8" http-equiv="Content-type" />
+<title></title>
+<p>
+	<style type="text/css">
+table.center {margin-left:auto; margin-right:auto;}
+.centered {
+	text-align: center;
+}
+.important {
+	text-align: center;
+	color: #FF0000;
+}
+.userInput {
+	color: #FF0000;
+}	</style>
+</p>
+<h1 class="centered">
+	CSC 115 - Lab 9</h1>
+
+<h2> 1. Lab Evaluations</h2>
+
+<ul>
+	<li>
+		For the first 15 minutes of Lab, we will be doing Lab Evaluations.
+	<li>
+		Please go to the Lab Evaluations link: <a href="https://evals.csc.uvic.ca/">https://evals.csc.uvic.ca/</a>
+</ul>
+
+<h2> 2. Heaps</h2>
+
+<ul>
+	<li>
+		So far we have created our Trees using a Node class, so they have been reference-based (where each Node has had a reference to left and right)
+	<li>
+		We can also implement Tree structures using an array. This is commonly done when working with Heaps, because Heaps are always <b><i>complete</i></b> Binary trees.
+
+</ul>
+<h3>2.1 Storage with an array</h2>
+<ul>
+	<li>
+		Because Heaps are always complete, we can implement them with an array and items will always be placed in the array without any gaps.
+	<li>
+		There are two ways to store Heaps with an array, one starting at index 0, and another leaving index 0 blank and starting at index 1.
+	<li>
+		If we were to store the following Heap in an array:
+	<ul>
+		<li>
+			<img src="images/arrayHeap.png">
+	</ul>
+	<li>
+		We would could get the following two arrays:
+		<ul>
+			<li>
+				Option 1: {1, 2, 3, 4, 5, 6}
+			<li>
+				Option 2: {null, 1, 2, 3, 4, 5, 6}
+		</ul>
+	<li>
+		At first, the Option 1 seems way better, and feel free to use that implementation for your assignment.
+	<li>
+		The reason some choose Option 2, is because it is easier to access each nodes children and parent using array indexes
+		<ul>
+			Let's look at the 2. Let n be the index of the child and p be the index of the parent. In our Option 2 array {null, 1, 2, 3, 4, 5, 6}, I have placed each node in its index number, so Node 2 is in index 2:
+			<li>
+				Using this indexing, the index of the parent is always p = n/2. So 2's parent is in index (2)/2 = 1
+			<li>
+				Using this indexing, the index of the left child is always left= 2*p. So 2's left child is in index 2*(2) = 4
+			<li>
+				Using this indexing, the index of right child is always right= 2*p + 1. So 2's right child is in index 2*(2) + 1 = 5
+		</ul>
+	<li>
+		If we use Option 1, the math to find the children and parent because a little more complex (but not by much).
+	<li>
+		On the other hand, Option 2, where the first index is always empty, other methods (like isEmpty) can be a little more compicated, so it is a trade-off.
+</ul>
+<h3>2.2 Max and Min Heaps</h3>
+	<ul>
+		<li>
+		Unlike Binary Search Trees, heaps are not completely sorted. Instead, the parent is just compared with the children (but there is no ordering amongst children).
+	<li>
+		In a <b><i>min</b></i> Heap, the parent always has a smaller value than its children. In a <b><i>max</b></i> heap, the parent always has a higher value than its children.
+	<li>
+	Below are two examples of a max Heap (notice the children are not ordered):
+		<ul>
+
+			<li>
+				<img src="images/maxHeap1.png">
+			<li>
+				<img src="images/maxHeap2.png">
+		</ul>
+	<li>
+	Below are two examples of a min Heap (notice the children are not ordered):
+		<ul>
+
+			<li>
+				<img src="images/minHeap1.png">
+			<li>
+				<img src="images/minHeap2.png">
+		</ul>
+</ul>
+
+
+
+<h3>2.3 Adding to a Heap</h2>
+<ul>
+	<li>
+		When adding to a Heap, we initially place the new Node in the first available position that maintains completeness of the tree.
+		<br>This means we will place the new node in the first empty spot as we go from left to right on the first unfilled level of the tree.
+	<li>
+		Adding a 20 to the previous two Heaps would result in the following:
+	<ul>
+		<li>
+			<img src="images/minHeap3.png">
+		<li>
+			<img src="images/minHeap4.png">
+	</ul>
+	<li>
+		If order is maintained, in this case, if the new node added has a value greater than its parents, then nothing more needs to be done!
+</ul>
+<h3>2.3.1 Adding and swapping</h2>
+<ul>
+	<li>
+		If when we add a new node order is not maintained, we must swap the new node with its parent.
+	<li>
+		For example, if we add a 2 to the previous Heap we get the following:
+	<ul>
+		<li>
+			<img src="images/minHeap5.png">
+		<li>
+			<img src="images/minHeap6.png">
+		<li>
+			<img src="images/minHeap7.png">
+	</ul>
+</ul>
+<h3>2.4 Removing from a Heap</h2>
+<ul>
+	<li>
+		When removing from a Heap, we will need to replace the item we are removing with the last item in the Heap (or the item with the highest index in the array).
+	<li>
+		Let's remove the 1 from the below Heap:
+	<ul>
+		<li>
+			<img src="images/minHeap4.png">
+	</ul>
+	<li>
+		Now we replace the 1 with the Node in the very last spot of our Heap, which is a 20 in this case.
+	<li>
+		The next thing we need to do is maintain the order in our Heap. Since this is a <i><b>min</i></b>Heap, if either of 20's children
+		have a lower value than 20, then we will need to make a swap.
+	<li>
+		The strategy is to swap 20 with it's smallest child until order is maintained:
+			<ul>
+		<li>
+			<img src="images/minHeap8.png">
+			<li>
+			<img src="images/minHeap9.png">
+			<li>
+			<img src="images/minHeap10.png">
+	</ul>
+</ul>
+<h3>2.5 Drawing a Heap</h2>
+<ul>
+	<li>
+		Starting from an empty Heap, add the following elements to a <i>MIN</i> HEAP.
+		<br>
+		4, 6, 2, 8, 5, 9, 1.
+	<li>
+		Now remove the root item and draw the Heap.<br>Remove the new root item and draw the Heap.
+</ul>
+<h2>3. Lab9.java </h2>
+<ul>
+	<li>
+		Download Lab9.java and finish the implementation. Submit Lab9.java at the end of your lab.
+
+</ul>
+<hr />
+
+  </body>
+</html>
+
